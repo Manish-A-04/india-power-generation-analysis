@@ -1,74 +1,82 @@
 # India Power Generation Analysis (2023–2024)
 
-An end-to-end data analysis project built in Microsoft Excel analyzing electricity generation trends, fuel source distribution, and regional grid performance across India.
+An Excel data analysis project exploring electricity generation trends, fuel sources, and regional grid performance across India.
 
 ---
 
 ## Project Overview
 
-I built this project to analyze official monthly power generation data published by the Central Electricity Authority (CEA), Ministry of Power, Government of India.
+In this project, I analyzed 7 months of official power generation data (July 2023 to January 2024) from the Central Electricity Authority (CEA), Ministry of Power.
 
-The dataset covers 305,429 MW of monitored capacity across 542 operational power stations in 37 Indian States and Union Territories over a 7-month period (July 2023 to January 2024).
-
-The objective was to take raw government CSV reports, clean and transform them in Excel, create dynamic Pivot Tables, and build a visual Executive Dashboard to evaluate grid performance against planned targets.
+The dataset covers 542 power stations across 37 Indian States and Union Territories with a total capacity of 305,429 MW. I cleaned the raw monthly data in Excel, calculated key grid metrics, created Pivot Tables, and built an interactive Executive Dashboard.
 
 ---
 
 ## Workbook Structure
 
-The Excel file (`India_Power_Generation_Analytics_2023_2024.xlsx`) is organized into 4 clear stages:
+The workbook (`India_Power_Generation_Analytics_2023_2024.xlsx`) has 4 clean sheets:
 
-1. **Raw Data**: The source audit trail containing all 7 monthly CSV files stacked into a single table (7,193 raw rows).
-2. **Clean Data**: The cleaned master table (3,640 plant records) with calculated columns for Target Variance, Target Fulfillment, YoY Growth, and Plant Efficiency (PLF %).
-3. **Pivot Analysis**: Native Excel Pivot Tables summarizing electricity production by Month, by Fuel Source, and by Grid Region.
-4. **Dashboard**: High-level visual dashboard featuring 4 KPI scorecards, a Target vs Actual Column Chart, a Fuel Mix Donut Chart, and a Regional Performance Summary Table.
+1. **Raw Data**: All 7 monthly CSV files combined into one table (7,193 rows).
+2. **Clean Data**: Cleaned power plant records (3,640 rows) with calculated metric columns.
+3. **Pivot Analysis**: Native Excel Pivot Tables summarizing power by Month, Fuel Type, and Region.
+4. **Dashboard**: High-level visual dashboard with 4 KPI cards, column and donut charts, and a regional summary table.
 
 ---
 
-## Step-by-Step: How I Analyzed the Data in Excel
+## How I Analyzed the Data in Excel
 
-### Step 1: Combining the Raw Files into Excel
-* I used Excel's Power Query / Get Data feature (`Data > Get Data > From File > From Folder`) to point to the folder containing the 7 monthly CEA reports.
-* Clicking `Combine & Transform Data` stacked all 7 monthly files into a single unified table with 7,193 rows in the `Raw Data` sheet.
+### Step 1: Combining the Monthly CSVs
+I used Excel's Power Query (`Data > Get Data > From File > From Folder`) to merge all 7 monthly reports into a single sheet containing 7,193 raw rows.
 
 ![Combined Raw Data](raw_data_combined.png)
 
 ---
 
 ### Step 2: Cleaning the Data & Removing Subtotals
-* The raw government tables contained subtotal and total summary rows mixed together with individual plant rows. If analyzed directly, this caused massive double-counting.
-* Looking closely at the data, I noticed that genuine power plant rows always had `NA` in Column H (`Stations`), while subtotal rows contained fuel types or state names.
-* I applied an Excel filter on Column H, unchecked `(Select All)`, and selected ONLY `NA`. This eliminated all 3,553 summary rows in a single click, leaving 3,640 clean power plant records in `Clean Data`.
+The raw reports contained subtotal rows mixed in with individual power plants. Genuine power plant rows always had `NA` in Column H (`Stations`). 
+
+I applied a filter on Column H and selected only `NA`. This removed all 3,553 summary rows in one click, leaving 3,640 clean plant records.
 
 ![Cleaned Master Data](cleaned_data.png)
 
 ---
 
-### Step 3: Adding Calculated Business Columns in Excel
-In the `Clean Data` sheet, I added 4 formula columns:
-1. **Variance (MU)**: `= L2 - K2` *(Actual Generation minus Planned Target)*
-2. **Target Met %**: `= IFERROR(L2 / K2, 0)` *(Actual divided by Target, formatted as `0.0%`)*
-3. **Year-over-Year Growth %**: `= IFERROR((L2 - M2) / M2, 0)` *(Actual minus Last Year Actual divided by Last Year)*
-4. **Plant Efficiency % (PLF)**: `= IFERROR((L2 * 1000) / (J2 * D2 * 24), 0)` *(Actual MWh divided by Capacity in MW * Operating Hours)*
+### Step 3: Categorizing Fuel Types
+To ensure clean grouping in Pivot Tables, I standardized all power stations into 4 main fuel categories:
+* **Coal / Thermal** (Thermal coal and lignite power plants)
+* **Hydro** (Hydroelectric dams and stations)
+* **Nuclear** (Nuclear power stations)
+* **Natural Gas** (Gas-based power plants)
 
 ---
 
-### Step 4: Building Native Pivot Tables for Analysis
-In the `Pivot Analysis` sheet, I created 3 separate native Pivot Tables from `Clean Data`:
-* **Monthly Summary Table**: Grouped by Month to compare planned target vs actual electricity generated each month.
-* **Fuel Mix Table**: Grouped by `Fuel_Type` (Coal/Thermal, Hydro, Nuclear, Natural Gas) to analyze fuel contributions.
-* **Regional Grid Table**: Grouped by `Region` to evaluate power production across the 5 electrical grid regions.
+### Step 4: Key Formulas Used (in Simple Words)
+
+Rather than hardcoding values, I added 4 calculated metric columns:
+
+* **Target Variance (MU)** = `Actual Generation - Planned Target`
+* **Target Met %** = `(Actual Generation / Planned Target) * 100`
+* **Year-over-Year Growth %** = `((Current Year Actual - Last Year Actual) / Last Year Actual) * 100`
+* **Plant Load Factor (PLF % / Plant Efficiency)** = `(Actual MWh / (Capacity in MW * Days in Month * 24 Hours)) * 100`
+
+---
+
+### Step 5: Pivot Table Analysis
+In the `Pivot Analysis` sheet, I created 3 native Excel Pivot Tables to summarize the data:
+* **Monthly Generation**: Target vs actual output across all 7 months.
+* **Fuel Source Breakdown**: Total electricity produced by Coal, Hydro, Nuclear, and Gas.
+* **Regional Grid Performance**: Power generation across Northern, Western, Southern, Eastern, and North Eastern grids.
 
 ![Pivot Table Analysis](pivot_analysis.png)
 
 ---
 
-### Step 5: Designing the Executive Dashboard
-In the `Dashboard` sheet, I built:
-* **4 KPI Scorecards**: Total Generation, Planned Target, Target Fulfillment Rate, and Clean Energy Share.
-* **Monthly Clustered Column Chart**: Showing actual monthly output compared to targets.
-* **Fuel Mix Doughnut Chart**: Highlighting the share of each fuel type in national electricity generation.
-* **Regional Executive Summary Table**: A structured overview of regional output and percentage share.
+### Step 6: Executive Dashboard
+In the `Dashboard` sheet, I created a visual summary for management:
+* **4 KPI Scorecards**: Total Generation, Planned Target, Target Met %, and Clean Energy Share.
+* **Monthly Clustered Column Chart**: Comparing planned target vs actual electricity generated each month.
+* **Fuel Mix Doughnut Chart**: Highlighting the percentage share of each fuel source.
+* **Regional Executive Summary Table**: Showing electricity generated and national share by region.
 
 ![Executive Dashboard Overview](dashboard_1.png)
 
@@ -76,66 +84,18 @@ In the `Dashboard` sheet, I built:
 
 ---
 
-## Key Industry Metrics & Formulas
+## Key Insights from the Data
 
-Here are the standard business formulas used in the project:
-
-### 1. Plant Load Factor (PLF / Plant Efficiency %)
-Measures actual electricity produced compared to the maximum possible production at 100% capacity:
-
-$$\text{Plant Efficiency (PLF \%)} = \frac{\text{Actual Generation (MU)} \times 1,000}{\text{Capacity (MW)} \times \text{Days in Month} \times 24 \text{ Hours}} \times 100$$
-
-*(1 MU = 1 Million Units = 1 Gigawatt-hour = $10^6$ kWh. Multiplying by 1,000 converts MU to MWh).*
-
-### 2. Generation Target Variance
-Measures whether a power plant exceeded or fell short of its planned monthly target:
-
-$$\text{Target Variance (MU)} = \text{Actual Generation (MU)} - \text{Planned Target (MU)}$$
-
-### 3. Target Fulfillment Rate (%)
-Measures the percentage of planned target achieved:
-
-$$\text{Target Met (\%)} = \left(\frac{\text{Actual Generation (MU)}}{\text{Planned Target (MU)}}\right) \times 100$$
-
-### 4. Year-over-Year (YoY) Growth (%)
-Measures annual demand growth compared to the same month of the previous year:
-
-$$\text{YoY Growth (\%)} = \left(\frac{\text{Actual Generation (Current Year)} - \text{Actual Generation (Last Year)}}{\text{Actual Generation (Last Year)}}\right) \times 100$$
-
-### 5. Clean & Transition Energy Share (%)
-Tracks the proportion of electricity coming from clean and low-carbon sources (Hydro, Nuclear, and Gas):
-
-$$\text{Clean Energy Share (\%)} = \left(\frac{\text{Hydro (MU)} + \text{Nuclear (MU)} + \text{Natural Gas (MU)}}{\text{Total National Generation (MU)}}\right) \times 100$$
+1. **National Target Was Exceeded (+2.8% Surplus)**: India generated **883,451 MU** of electricity against a planned target of **859,484 MU** (102.8% target achievement). Peak demand was in August and October.
+2. **Coal is the Main Baseload Power (84.7%)**: Coal and thermal plants produced **748,752 MU (84.7% of all power)**, exceeding their target by +4.9%.
+3. **Hydro Generation Dropped in Winter (9.8%)**: Hydro plants produced **86,352 MU**, but missed targets (86.3% achievement) as dam water levels fell in winter.
+4. **Nuclear and Gas Met Targets**: Nuclear produced **30,198 MU (110.0% of target)** and Natural Gas produced **18,149 MU (101.4% of target)**.
+5. **Western Grid is the Largest Producer (37.5%)**: The Western Region generated **331,575 MU**, beating its target by +11.8% and supplying power to northern states during peak winter demand.
 
 ---
 
-## Key Insights Based on the Current Analysis
+## Project Files
 
-### 1. National Power Generation Beat Planned Targets (+2.8% Surplus)
-* Across the 7 months, India generated **883,451 Million Units (MU)** of electricity against a planned target of **859,484 MU**.
-* This represents a **102.8% target fulfillment rate**, creating an overall national surplus of **+23,967 MU**.
-* Peak power production occurred in **August 2023 (137,078 MU)** and **October 2023 (132,993 MU)** driven by post-monsoon industrial demand.
-
-### 2. Coal / Thermal Remains the Overwhelming Grid Backbone (84.7% Share)
-* **Coal and thermal plants generated 748,752 MU**, making up **84.7% of all electricity produced**.
-* Thermal generation beat its planned target of 714,098 MU with a **104.9% target fulfillment rate**, acting as the essential baseload power supply.
-
-### 3. Hydro Power Saw Shortfalls in Winter (86.4% Target Met)
-* **Hydro plants generated 86,352 MU (9.8% national share)**, but fell short of the planned government target of 100,034 MU.
-* Hydro generation peaked in August during peak monsoon inflow and dropped substantially during winter as dam reservoir water levels receded.
-
-### 4. Nuclear & Gas Met Their Targets Reliably
-* **Nuclear power plants produced 30,198 MU (3.4% share)**, beating their planned target of 27,453 MU by **+10.0% (110% target fulfillment)**.
-* **Natural gas plants produced 18,149 MU (2.1% share)**, operating on-target with **101.4% target fulfillment**.
-
-### 5. Western Grid is India's Primary Energy Powerhouse (37.5% Share)
-* The **Western Region generated 331,575 MU (37.5% of national generation)**, beating its target of 296,604 MU by **+11.8%** and exporting power across inter-regional corridors.
-* The **Northern Region was the second largest generator (218,246 MU, 24.7% share)**, followed by the **Southern Region (165,906 MU, 18.8% share)** and the **Eastern Region (154,429 MU, 17.5% share)**.
-
----
-
-## Repository Contents
-
-* `India_Power_Generation_Analytics_2023_2024.xlsx`: Complete 4-sheet Excel project (Raw Data, Clean Data, Pivot Analysis, Dashboard).
-* `interview_walkthrough_guide.md`: Plain-English interview walkthrough script.
-* `data/`: 7 monthly CEA power generation CSV reports (July 2023 to January 2024).
+* `India_Power_Generation_Analytics_2023_2024.xlsx`: Master Excel workbook with all 4 sheets.
+* `interview_walkthrough_guide.md`: Step-by-step interview explanation guide.
+* `data/`: 7 raw CEA monthly power generation CSV files.
