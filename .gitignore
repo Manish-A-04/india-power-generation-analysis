@@ -29,6 +29,7 @@ env/
 
 # 4. Ignore any intermediate scripts or scrap data
 *.py
+*.ps1
 *.m
 *.ipynb
 scratch/
@@ -44,9 +45,10 @@ data/*
 # EXPLICITLY TRACK RELEVANT PROJECT DELIVERABLES
 # =============================================================================
 
-# Track Documentation
+# Track Documentation & Images
 !README.md
 !.gitignore
+!*.png
 
 # Track Final Master Excel Workbook
 !India_Power_Generation_Analytics_2023_2024.xlsx
