@@ -1,0 +1,62 @@
+# =============================================================================
+# Git Ignore Configuration - India Power Generation Analytics Project
+# =============================================================================
+
+# 1. Ignore all temporary, OS, and IDE files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.tmp
+*.temp
+*.log
+
+# 2. Ignore Excel temporary lock and backup files
+~$*.xlsx
+~$*.xls
+~$*.csv
+*.xlsx.tmp
+
+# 3. Ignore Python cache and runtime artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+venv/
+env/
+.pytest_cache/
+
+# 4. Ignore any intermediate scripts or scrap data
+*.py
+*.m
+*.ipynb
+scratch/
+
+# 5. Ignore Personal Interview Guide
+interview_walkthrough_guide.md
+
+# 6. Ignore unrelated datasets inside data directory
+data/*
+!data/power_generation_*.csv
+
+# =============================================================================
+# EXPLICITLY TRACK RELEVANT PROJECT DELIVERABLES
+# =============================================================================
+
+# Track Documentation
+!README.md
+!.gitignore
+
+# Track Final Master Excel Workbook
+!India_Power_Generation_Analytics_2023_2024.xlsx
+
+# Track Relevant Power Generation CSVs
+!data/
+!data/power_generation_2023_07_july.csv
+!data/power_generation_2023_08_august.csv
+!data/power_generation_2023_09_september.csv
+!data/power_generation_2023_10_october.csv
+!data/power_generation_2023_11_november.csv
+!data/power_generation_2023_12_december.csv
+!data/power_generation_2024_01_january.csv
